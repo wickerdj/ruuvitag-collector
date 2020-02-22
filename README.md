@@ -6,6 +6,7 @@ Listens for data coming from a [RuuviTag](https://ruuvi.com/ruuvitag-specs/) sen
 
 # Disable of Bluetooth Scanning on the Raspberry Pi
 `sudo hciconfig hci0 down`
+
 `sudo service bluetooth stop`
 
 The above commands are good for testing. If the Raspberry Pi is rebooted the start up script will restart Bluetooth Scanning
