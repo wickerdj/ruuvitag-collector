@@ -1,4 +1,4 @@
-package main
+package sensor
 
 import (
 	"encoding/binary"

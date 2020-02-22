@@ -6,6 +6,7 @@ import (
 
 	"github.com/paypal/gatt"
 	"github.com/paypal/gatt/examples/option"
+	"github.com/wickerdj/ruuvitag-collector/pkg/sensor"
 )
 
 func onStateChanged(device gatt.Device, s gatt.State) {
@@ -23,7 +24,7 @@ func onDiscovery(p gatt.Peripheral, a *gatt.Advertisement, rssi int) {
 	fmt.Printf("\nPeripheral ID:%s, NAME:(%s)\n", p.ID(), p.Name())
 	fmt.Println("  TX Power Level    =", a.TxPowerLevel)
 
-	d, err := Parse(a.ManufacturerData, p.ID())
+	d, err := sensor.Parse(a.ManufacturerData, p.ID())
 	if err != nil {
 		log.Printf("bad data id:%v\n", p.ID())
 	} else {
