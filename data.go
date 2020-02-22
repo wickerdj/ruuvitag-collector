@@ -22,12 +22,13 @@ type Data struct {
 }
 
 // Parse the data
-func Parse(data []byte) (sensorData Data, err error) {
+func Parse(data []byte, id string) (sensorData Data, err error) {
 	if IsRuuviTag(data) {
 		sensorFormat := data[2]
 		switch sensorFormat {
 		case 5:
 			sensorData, err = ParseSensorFormat5(data)
+			sensorData.Addr = id
 			return
 		default:
 			err = fmt.Errorf("unknown sensor format: %v", sensorFormat)

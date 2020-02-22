@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/binary"
+	"time"
 )
 
 // DataFormat5 - Data Format 5 Protocol Specification (RAWv2)
@@ -36,5 +37,6 @@ func ParseSensorFormat5(data []byte) (sd Data, err error) {
 	sd.AccelerationZ = int(result.AccelerationZ)
 	sd.Battery = int(result.BatteryVoltage >> 5)
 	sd.MovementCounter = int(result.MovementCounter)
+	sd.Timestamp = time.Now()
 	return
 }
