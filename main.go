@@ -19,9 +19,10 @@ func onStateChanged(device gatt.Device, s gatt.State) {
 }
 
 func onDiscovery(p gatt.Peripheral, a *gatt.Advertisement, rssi int) {
-	fmt.Println("ManufacturerData", a.ManufacturerData)
-	fmt.Println("LocalName", a.LocalName)
-	fmt.Println("ServiceData", a.ServiceData)
+
+	fmt.Printf("\nPeripheral ID:%s, NAME:(%s)\n", p.ID(), p.Name())
+	fmt.Println("  TX Power Level    =", a.TxPowerLevel)
+
 }
 
 func main() {
