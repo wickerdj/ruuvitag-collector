@@ -1,5 +1,10 @@
 package main
 
+import (
+	"bytes"
+	"encoding/binary"
+)
+
 // DataFormat5 - Data Format 5 Protocol Specification (RAWv2)
 type DataFormat5 struct {
 	ManufacturerID    uint16
