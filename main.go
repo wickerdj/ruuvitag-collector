@@ -23,6 +23,13 @@ func onDiscovery(p gatt.Peripheral, a *gatt.Advertisement, rssi int) {
 	fmt.Printf("\nPeripheral ID:%s, NAME:(%s)\n", p.ID(), p.Name())
 	fmt.Println("  TX Power Level    =", a.TxPowerLevel)
 
+	if p.ID() == "F8:1D:CC:84:AE:D4" {
+		d, err := Parse(a.ManufacturerData)
+		if err != nil {
+			log.Fatalln("bad data")
+		}
+		fmt.Printf("\tAddr: %s\n\tTemperature: %s\n", d.Addr, d.Temperature)
+	}
 }
 
 func main() {
