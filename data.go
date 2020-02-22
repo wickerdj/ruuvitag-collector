@@ -34,6 +34,9 @@ func Parse(data []byte) (sensorData Data, err error) {
 			return
 		}
 	}
+
+	err = fmt.Errorf("not Ruuvi data")
+	return
 }
 
 // IsRuuviTag checks that the data is for a RuuviTag
