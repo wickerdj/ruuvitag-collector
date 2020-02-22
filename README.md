@@ -14,6 +14,10 @@ The above commands are good for testing. If the Raspberry Pi is rebooted the sta
 # Build for the Rasberry Pi
 `env GOOS=linux GOARCH=arm GOARM=5 go build`
 
+# Resources
+- [Ruuvi Sensor Protocols](https://github.com/ruuvi/ruuvi-sensor-protocols)
+
+
 # Inspired by
 This project was inspired by the work of
 - [https://github.com/peterhellberg/ruuvitag](https://github.com/peterhellberg/ruuvitag)
