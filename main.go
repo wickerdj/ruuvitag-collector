@@ -11,6 +11,13 @@ import (
 	"github.com/wickerdj/ruuvitag-collector/pkg/sensor"
 )
 
+const dbAddr = "http://192.168.1.204:8086"
+const dbUserName = "username"
+const dbPassword = "password"
+const dbName = "ruuvi"
+const dbPrecision = "s"
+const dbMeasurement = "readings"
+
 func onStateChanged(device gatt.Device, s gatt.State) {
 	switch s {
 	case gatt.StatePoweredOn:
@@ -33,7 +40,9 @@ func onDiscovery(p gatt.Peripheral, a *gatt.Advertisement, rssi int) {
 
 func write(data sensor.Data) {
 	c, err := influx.NewHTTPClient(influx.HTTPConfig{
-		Addr: "http://192.168.1.204:8086",
+		Addr: dbAddr,
+		// UserName: dbUserName,
+		// Password: dbPassword,
 	})
 	if err != nil {
 		fmt.Println("Error creating InfluxDB Client: ", err.Error())
@@ -41,15 +50,15 @@ func write(data sensor.Data) {
 	defer c.Close()
 
 	bp, err := influx.NewBatchPoints(influx.BatchPointsConfig{
-		Database:  "ruuvi",
-		Precision: "s",
+		Database:  dbName,
+		Precision: dbPrecision,
 	})
 
 	if err != nil {
 		log.Fatalln("Error: ", err)
 	}
 
-	point, err := influx.NewPoint("readings", map[string]string{
+	point, err := influx.NewPoint(dbMeasurement, map[string]string{
 		"mac":  strings.ToUpper(data.Addr),
 		"name": data.Name,
 	}, map[string]interface{}{
