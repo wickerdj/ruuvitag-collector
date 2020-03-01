@@ -29,7 +29,7 @@ func Parse(data []byte, id string) (sensorData Data, err error) {
 		case 5:
 			sensorData, err = ParseSensorFormat5(data)
 			sensorData.Addr = id
-			sensorDate.Name = id
+			sensorData.Name = id
 			return
 		default:
 			err = fmt.Errorf("unknown sensor format: %v", sensorFormat)
