@@ -3,6 +3,7 @@ Listens for data coming from a [RuuviTag](https://ruuvi.com/ruuvitag-specs/) sen
 
 # Additional Libraries
 `go get github.com/go-ble/ble`
+
 `go get github.com/mgutz/logxi/v1`
 
 # Disable of Bluetooth Scanning on the Raspberry Pi
