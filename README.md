@@ -2,7 +2,8 @@
 Listens for data coming from a [RuuviTag](https://ruuvi.com/ruuvitag-specs/) sensor and pushes the data if InfluxDB.
 
 # Additional Libraries
-`go get github.com/paypal/gatt`
+`go get github.com/go-ble/ble`
+`go get github.com/mgutz/logxi/v1`
 
 # Disable of Bluetooth Scanning on the Raspberry Pi
 `sudo hciconfig hci0 down`
@@ -25,3 +26,6 @@ This project was inspired by the work of
 - [https://github.com/niktheblak/ruuvitag-gollector](https://github.com/niktheblak/ruuvitag-gollector)
 - [https://github.com/Turee/goruuvitag](https://github.com/Turee/goruuvitag)
 - [Scan For BLE iBeacon Devices with Golang on A Raspberry Pi Zero W](https://www.thepolyglotdeveloper.com/2018/02/scan-ble-ibeacon-devices-golang-raspberry-pi-zero-w/)
+
+# Notes
+* When I used the library from github.com/paypal/gatt, the code would throw an error about a slice bounds out of range. The error would normally occur within 1 15 minutes of starting the test. 

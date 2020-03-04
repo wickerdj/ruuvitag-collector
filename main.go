@@ -1,42 +1,38 @@
 package main
 
 import (
-	"log"
+	"context"
 
-	"github.com/paypal/gatt"
-	"github.com/paypal/gatt/examples/option"
+	"github.com/go-ble/ble"
+	"github.com/go-ble/ble/examples/lib/dev"
 	"github.com/wickerdj/ruuvitag-collector/pkg/influxdb"
 	"github.com/wickerdj/ruuvitag-collector/pkg/sensor"
 )
 
-func onStateChanged(device gatt.Device, s gatt.State) {
-	switch s {
-	case gatt.StatePoweredOn:
-		device.Scan([]gatt.UUID{}, true)
-		return
-	default:
-		device.StopScanning()
+func setup(ctx context.Context) context.Context {
+	d, err := dev.DefaultDevice()
+	if err != nil {
+		panic(err)
 	}
-}
+	ble.SetDefaultDevice(d)
 
-func onDiscovery(p gatt.Peripheral, a *gatt.Advertisement, rssi int) {
-
-	d, err := sensor.Parse(a.ManufacturerData, p.ID())
-
-	if err == nil {
-		influxdb.Write(d)
-		// fmt.Printf("\tAddr: %v\n\tTemperature: %v\n\tHumidity: %v\n\tBattery: %v\n\tTimestamp: %v\n", d.Addr, d.Temperature, d.Humidity, d.Battery, d.Timestamp)
-	}
+	return ble.WithSigHandler(context.WithCancel(ctx))
 }
 
 func main() {
+	ctx := setup(context.Background())
 
-	device, err := gatt.NewDevice(option.DefaultClientOptions...)
-	if err != nil {
-		log.Fatalf("Problem with device err: %s\n", err)
+	ble.Scan(ctx, true, handler, filter)
+}
+
+func handler(a ble.Advertisement) {
+	d, err := sensor.Parse(a.ManufacturerData(), a.Addr().String())
+	if err == nil {
+		// fmt.Printf("[%s] RSSI: %3d: %+v\n", a.Addr(), a.RSSI(), d)
+		influxdb.Write(d)
 	}
+}
 
-	device.Handle(gatt.PeripheralDiscovered(onDiscovery))
-	device.Init(onStateChanged)
-	select {}
+func filter(a ble.Advertisement) bool {
+	return sensor.IsRuuviTag(a.ManufacturerData())
 }
