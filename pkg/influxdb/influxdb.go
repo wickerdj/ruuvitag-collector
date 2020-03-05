@@ -9,9 +9,9 @@ import (
 	"github.com/wickerdj/ruuvitag-collector/pkg/sensor"
 )
 
+// const dbUserName = "username"
+// const dbPassword = "password"
 const dbAddr = "http://192.168.1.204:8086"
-const dbUserName = "username"
-const dbPassword = "password"
 const dbName = "ruuvi"
 const dbPrecision = "s"
 const dbMeasurement = "readings"
