@@ -29,4 +29,4 @@ This project was inspired by the work of
 - [Scan For BLE iBeacon Devices with Golang on A Raspberry Pi Zero W](https://www.thepolyglotdeveloper.com/2018/02/scan-ble-ibeacon-devices-golang-raspberry-pi-zero-w/)
 
 # Notes
-* When I used the library from github.com/paypal/gatt, the code would throw an error about a slice bounds out of range. The error would normally occur within 1 15 minutes of starting the test. 
+* When I used the library from github.com/paypal/gatt, the code would throw an error about a slice bounds out of range. The error would normally occur within 15 minutes of starting the test. 
