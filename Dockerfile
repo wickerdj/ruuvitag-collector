@@ -1,6 +1,7 @@
-FROM golang:1.14.0-alpine3.11
+FROM golang:1
+
 RUN mkdir /app
 ADD . /app
 WORKDIR /app
-RUN go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm GOARM=5 go build -o main .
 CMD ["/app/main"]
