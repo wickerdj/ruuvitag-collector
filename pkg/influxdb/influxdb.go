@@ -7,7 +7,7 @@ import (
 	"github.com/wickerdj/ruuvitag-collector/pkg/sensor"
 )
 
-const dbAddr = "http://192.168.1.204:8086"
+const dbAddr = "http://192.168.1.30:8086"
 const dbBucketName = "ruuvi"
 const dbOrg = "wick"
 const dbToken = "sITKb6pogww_buCm0yxa3oymE9RFb8zk_zuo_YrCcJrGYgcS8SKMYAOdXtrJaJw_M-oUPMrO9BnVZghux1qL7g=="
