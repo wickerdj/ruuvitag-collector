@@ -1,43 +1,26 @@
 package influxdb
 
 import (
-	"fmt"
-	"log"
 	"strings"
 
-	influx "github.com/influxdata/influxdb1-client/v2"
+	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
 	"github.com/wickerdj/ruuvitag-collector/pkg/sensor"
 )
 
-// const dbUserName = "username"
-// const dbPassword = "password"
 const dbAddr = "http://192.168.1.204:8086"
-const dbName = "ruuvi"
+const dbBucketName = "ruuvi"
+const dbOrg = "wick"
+const dbToken = "sITKb6pogww_buCm0yxa3oymE9RFb8zk_zuo_YrCcJrGYgcS8SKMYAOdXtrJaJw_M-oUPMrO9BnVZghux1qL7g=="
 const dbPrecision = "s"
 const dbMeasurement = "readings"
 
 // Write the data to an Influx data store
 func Write(data sensor.Data) {
-	c, err := influx.NewHTTPClient(influx.HTTPConfig{
-		Addr: dbAddr,
-		// UserName: dbUserName,
-		// Password: dbPassword,
-	})
-	if err != nil {
-		fmt.Println("Error creating InfluxDB Client: ", err.Error())
-	}
-	defer c.Close()
+	client := influxdb2.NewClient(dbAddr, dbToken)
 
-	bp, err := influx.NewBatchPoints(influx.BatchPointsConfig{
-		Database:  dbName,
-		Precision: dbPrecision,
-	})
+	defer client.Close()
 
-	if err != nil {
-		log.Fatalln("Error: ", err)
-	}
-
-	point, err := influx.NewPoint(dbMeasurement, map[string]string{
+	point := influxdb2.NewPoint(dbMeasurement, map[string]string{
 		"mac":  strings.ToUpper(data.Addr),
 		"name": data.Name,
 	}, map[string]interface{}{
@@ -50,7 +33,6 @@ func Write(data sensor.Data) {
 		"acceleration_z": data.AccelerationZ,
 	}, data.Timestamp)
 
-	bp.AddPoint(point)
-
-	c.Write(bp)
+	writeAPI := client.WriteAPI(dbOrg, dbBucketName)
+	writeAPI.WritePoint(point)
 }
