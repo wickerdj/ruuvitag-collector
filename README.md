@@ -1,6 +1,6 @@
 # ruuvitag-collector
 
-Listens for data coming from a [RuuviTag](https://ruuvi.com/ruuvitag-specs/) sensor and pushes the data if InfluxDB.
+Listens for data coming from a [RuuviTag](https://ruuvi.com/ruuvitag-specs/) sensor and pushes the data to an InfluxDB database.
 
 ## Additional Libraries
 
